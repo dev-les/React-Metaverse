@@ -8,7 +8,7 @@ const corsOption = {
     origin: '*',
 };
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 global.access_token = '';
 
