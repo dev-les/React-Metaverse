@@ -35,7 +35,7 @@ function requireHTTPS(req, res, next) {
     next();
 }
 var app = express();
-// app.use(requireHTTPS);
+app.use(requireHTTPS);
 app.use(cors(corsOption));
 app.use(express.static(path.join(__dirname, '../build')));
 
@@ -62,8 +62,9 @@ app.get('/auth/login', (req, res) => {
 
 app.get('/auth/callback', (req, res) => {
     var code = req.query.code;
-    var value = Buffer.from(`${spotify_client_id}:${spotify_client_secret}`,'ascii').toString('base64');
+    var value = 'ZGU2OTExZjA3ZDI3NGY0MjgzODRhNWRiOWJhY2NiMjM6YTJkMTQ1OWNhMTEzNDcxOWFlZTk4ZTU0YTg0NTY0MDQ=';
     console.log(value);
+    console.log(Buffer.from(value, 'base64').toString('ascii'));
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         form: {
