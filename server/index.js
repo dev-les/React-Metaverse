@@ -2,7 +2,7 @@ const express = require('express');
 const request = require('request');
 const dotenv = require('dotenv');
 var path = require('path');
-var Buffer = require('buffer/').Buffer;
+var Buffer = require('buffer');
 const cors = require('cors');
 
 const corsOption = {
