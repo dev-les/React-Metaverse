@@ -82,9 +82,9 @@ app.get('/auth/callback', (req, res) => {
         if(!error && response.statusCode === 200) {
             access_token = body.access_token;
             res.redirect('/');
-        }else {
-            console.log(error)
-            console.log(response)
+        }else{
+            console.log(`Status Code: ${response.statusCode}`)
+            console.log(`Status Code: ${response.statusMessage}`)
         }
     })}
     catch(error) {
