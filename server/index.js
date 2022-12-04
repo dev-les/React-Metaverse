@@ -46,7 +46,8 @@ app.get('/auth/login', (req, res) => {
 
     var state = generateRandomStrings(16);
     var spotify_redirect_uri = `${req.get('referer')}auth/callback`;
-    console.log(req.get('referer'));
+    console.log('***LOGIN***');
+    console.log(spotify_redirect_uri);
 
     var auth_query_parameters = new URLSearchParams({
         response_type: "code",
@@ -75,13 +76,20 @@ app.get('/auth/callback', (req, res) => {
         },
         json: true
     }
-
-    request.post(authOptions, function(error, response, body){
+    console.log('***CALLBACK***');
+    console.log(authOptions);
+    try {request.post(authOptions, function(error, response, body){
         if(!error && response.statusCode === 200) {
             access_token = body.access_token;
             res.redirect('/');
+        }else {
+            console.log(error)
+            console.log(response)
         }
-    })
+    })}
+    catch(error) {
+        console.log(error);
+    }
 });
 
 app.get('/auth/token', (req, res) => {
