@@ -2,7 +2,6 @@ const express = require('express');
 const request = require('request');
 const dotenv = require('dotenv');
 var path = require('path');
-var Buffer = require('buffer');
 const cors = require('cors');
 
 const corsOption = {
@@ -72,7 +71,7 @@ app.get('/auth/callback', (req, res) => {
             grant_type: 'authorization_code'
         },
         headers: {
-            'Authorization' : 'Basic '+(Buffer.from(spotify_client_id + ':' + spotify_client_secret).toString('base64')),
+            'Authorization' : 'Basic '+(Buffer(spotify_client_id + ':' + spotify_client_secret).toString('base64')),
             'Content-Type' : 'applications/x-www-from-urlencoded'
         },
         json: true
