@@ -27,15 +27,15 @@ var generateRandomStrings = (length) => {
     }
     return text;
 }
-function requireHTTPS(req, res, next) {
-    // The 'x-forwarded-proto' check is for Heroku
-    if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
-        return res.redirect('https://' + req.get('host') + req.url);
-    }
-    next();
-}
+// function requireHTTPS(req, res, next) {
+//     // The 'x-forwarded-proto' check is for Heroku
+//     if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+//         return res.redirect('https://' + req.get('host') + req.url);
+//     }
+//     next();
+// }
 var app = express();
-app.use(requireHTTPS);
+// app.use(requireHTTPS);
 app.use(cors(corsOption));
 app.use(express.static(path.join(__dirname, '../build')));
 
@@ -62,9 +62,6 @@ app.get('/auth/login', (req, res) => {
 
 app.get('/auth/callback', (req, res) => {
     var code = req.query.code;
-    var value = 'ZGU2OTExZjA3ZDI3NGY0MjgzODRhNWRiOWJhY2NiMjM6YTJkMTQ1OWNhMTEzNDcxOWFlZTk4ZTU0YTg0NTY0MDQ=';
-    console.log(value);
-    console.log(Buffer.from(value, 'base64').toString('ascii'));
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         form: {
@@ -73,7 +70,7 @@ app.get('/auth/callback', (req, res) => {
             grant_type: 'authorization_code'
         },
         headers: {
-            'Authorization' : 'Basic '+ value,
+            'Authorization' : 'Basic '+ (Buffer.from(`${spotify_client_id}:${spotify_client_secret}`).toString('base64')),
             'Content-Type' : 'applications/x-www-from-urlencoded'
         },
         json: true
