@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import 'aframe';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import sky from './stars.jpg';
-import boomBox from './models/unit_block.glb';
-import AFRAME from 'aframe';
+import block from './models/unit_block.glb';
 const track = {
     name: "",
     album: {
@@ -15,25 +14,12 @@ const track = {
         { name: "" }
     ]
 }
-AFRAME.registerComponent('foo', {
-    // init: () =>{
-    //     console.log(this.data)
-    // },
-    events: {
-      click: function (evt) {
-        // let element = document.querySelector('#music_frame');
-        // element.setAttribute("animation",{property: 'rotation'})
-        // element.object3D.rotation.y = THREE.Math.degToRad(45);
-        console.log(this.data);
-      }
-    }
-  });
 
 function World(props) {
     const loader  = new GLTFLoader();
 
-  loader.load(boomBox, (d) =>{
-    const entity = document.getElementById("mountain");
+  loader.load(block, (d) =>{
+    const entity = document.getElementById("block");
     entity.object3D.add(d.scene);
   })
 
@@ -53,7 +39,7 @@ function World(props) {
         window.onSpotifyWebPlaybackSDKReady = () => {
 
             const player = new window.Spotify.Player({
-                name: 'Web Playback SDK',
+                name: 'Spotify VR',
                 getOAuthToken: cb => { cb(props.token); },
                 volume: 0.5
             });
@@ -109,11 +95,17 @@ function World(props) {
 
     }, [is_paused])
 
+    let connected = () => {
+      if(current_track?.album?.images[0]?.url){
+        return <a-image src={current_track.album.images[0].url} mixin="poster"/>
+      }
+      return <a-entity scale="4 4 1" position=" 0 0.2 0" text="value: Connect Device; align: center;"></a-entity>
+    }
+
   return (
     <a-scene>
       <a-assets>
         <img id= "sky" src={sky} />
-        <img id="song-playing-img" src={current_track.album.images[0].url}/>
         <img id="test" src={require('./assets/testImage.jpeg')}/>
         <img id="spotify" src={require('./assets/spotifyglass2.png')}/>
         <img id="pause" src={require('./assets/pause.png')}/>
@@ -175,7 +167,7 @@ function World(props) {
       height="100"
       width="100"
       />
-      <a-entity id="mountain" 
+      <a-entity id="block" 
       position="-.042 .595 -2.45"
       rotation="90 90 0" 
       scale=".14 .41 .16"
@@ -185,7 +177,7 @@ function World(props) {
         <a-image src="#logo" scale=".4 .4 0"/>
       </a-entity>
       <a-entity id="music_frame" position="0 .281 .05" mixin="frame" class="raycastable menu-button">
-            <a-image src={current_track.album.images[0].url} mixin="poster"/>
+            {connected()}
       </a-entity>
       <a-entity id="play_button" material="src:#play" mixin="button" position="0 -.85 .052"/>
       <a-entity id="next_button" material="src:#next" mixin="trackChange" position=".6 -.85 .052"/>

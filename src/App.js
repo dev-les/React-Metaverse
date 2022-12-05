@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'aframe';
 import React, { useState, useEffect } from 'react';
-import World from './test';
+import World from './World';
 import Login from './Login'
 function App() {
   const [token, setToken] = useState('');

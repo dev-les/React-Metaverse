@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-logo {
@@ -15,7 +16,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +28,26 @@
 .App-link {
   color: #61dafb;
 }
+.spotify-logo {
+  width: 25%;
+}
+button {
+  border-radius: 8px;
+  background-color: #1DB954;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.main {
+  min-height: 70vh;
+  padding-top: 25px;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -34,5 +55,11 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .spotify-logo {
+    width: 40%;
   }
 }
